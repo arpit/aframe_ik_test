@@ -32,13 +32,44 @@
 
     <script>
 
+    let scene = document.querySelector("a-scene")
 
-    let holder = document.querySelector("#model")
-    console.log(holder.components)
+    function findObjectNamed(obj3D, name){
+        if(obj3D.name === name){
+          return obj3D
+        }
 
-    var helper = new THREE.SkeletonHelper( mesh );
-    helper.material.linewidth = 3;
-    scene.add( helper );
+        if(obj3D.children.length == 0) return null;
+
+        for(var i=0; i < obj3D.children.length; i++){
+          let c = findObjectNamed(obj3D.children[i], name)
+          if(c != null) return c;
+        }
+
+      }
+
+      //setTimeout(()=>{
+        let holder = document.querySelector("#model")
+        holder.addEventListener("model-loaded", ()=>{
+          let armature = findObjectNamed(holder.object3D, "Armature")
+          console.log("Armature: ",armature.parent)
+
+          var helper = new THREE.SkeletonHelper( armature );
+          helper.material.linewidth = 3;
+          scene.object3D.add( helper );
+
+        })
+
+      //}, 1000)
+
+
+
+
+
+
+
+
+
 
     </script>
 
