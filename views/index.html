@@ -52,10 +52,11 @@
         let holder = document.querySelector("#model")
         holder.addEventListener("model-loaded", ()=>{
           let armature = findObjectNamed(holder.object3D, "Armature")
-          console.log("Armature: ",armature.parent)
+          console.log("Armature: ",armature)
 
           var helper = new THREE.SkeletonHelper( armature );
           helper.material.linewidth = 3;
+
           scene.object3D.add( helper );
 
         })
